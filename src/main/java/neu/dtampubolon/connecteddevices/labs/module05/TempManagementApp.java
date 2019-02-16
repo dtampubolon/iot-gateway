@@ -12,8 +12,8 @@ package neu.dtampubolon.connecteddevices.labs.module05;
 public class TempManagementApp {
 
 	/**
-	 * This class simulates an app that runs the sensor adaptors, actuators, and
-	 * connect to an SMTP client connector
+	 * This class converts data to/from SensorData and ActuatorData objects from/to JSON strings
+	 * JSON strings are received from Python apps that process sensor/actuator data
 	 * @param args
 	 */
 	public TempManagementApp() {
