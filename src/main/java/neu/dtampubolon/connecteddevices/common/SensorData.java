@@ -39,7 +39,7 @@ public class SensorData {
 	public void addValue(double newVal) {
 		sampleCount++;
 		
-		timeStamp = new Date();
+		timeStamp = new Date().toString();
 		curValue = newVal;
 		totValue += newVal;
 		

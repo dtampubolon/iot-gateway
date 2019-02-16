@@ -27,7 +27,7 @@ public class ActuatorData {
 	
 	public ActuatorData() {
 		// Constructor
-		timeStamp = new Date();
+		timeStamp = new Date().toString();
 		name = "Name not set";
 		hasError = false;
 		command = 0;
