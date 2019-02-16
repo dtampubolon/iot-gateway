@@ -16,7 +16,7 @@ public class SensorData {
 	/**
 	 * This class keeps track of the maximum, minimum, and average temperature readings
 	 */
-	private Date timeStamp;
+	private String timeStamp;
 	private String name;
 	private double curValue = 0; //Current value of reading
 	
@@ -29,7 +29,7 @@ public class SensorData {
 	
 	public SensorData() {
 		// Constructor
-		timeStamp = new Date();	
+		timeStamp = new Date().toString();	
 	}
 	
 	/**
@@ -53,7 +53,7 @@ public class SensorData {
 		
 	}
 	public String toString() {
-		return String.format("\tTime: %1$tD "
+		return String.format("\tTime: %1$s "
 				+ "\tCurrent: %2$.5f"
 				+ "\tAverage : %3$.5f"
 				+ "\tSamples %4$1d"

@@ -16,7 +16,7 @@ public class ActuatorData {
 	 * This class contains the appropriate data to signal a temperature increase
 	 * or decrease request
 	 */
-	private Date timeStamp;
+	private String timeStamp;
 	private String name; 
 	private boolean hasError;
 	private int command;
@@ -93,7 +93,7 @@ public class ActuatorData {
 	}
 	
 	public void updateTimeStamp() {
-		timeStamp = new Date();
+		timeStamp = new Date().toString();
 	}
 
 }
