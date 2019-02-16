@@ -2,10 +2,10 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>schooldomain.studentname.connecteddevices</groupId>
-	<artifactId>studentname-connected-devices-java</artifactId>
+	<groupId>neu.dtampubolon.connecteddevices</groupId>
+	<artifactId>dtampubolon-connected-devices-java</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Schoolname - Studentname - Connected Devices (Java)</name>
+	<name>neu - dtampubolon - Connected Devices (Java)</name>
 	<description>Java-based lab modules for the Connected Devices IoT course.</description>
 	<repositories>
 		<repository>
@@ -93,7 +93,7 @@
 							<archive>
 								<manifest>
 									<addClasspath>true</addClasspath>
-									<mainClass>schooldomain.studentname.connecteddevices.labs.module05.Module05App</mainClass>
+									<mainClass>neu.dtampubolon.connecteddevices.labs.module05.Module05App</mainClass>
 									<classpathPrefix>dep-libs/</classpathPrefix>
 								</manifest>
 							</archive>
@@ -114,7 +114,7 @@
 							<archive>
 								<manifest>
 									<addClasspath>true</addClasspath>
-									<mainClass>schooldomain.studentname.connecteddevices.labs.module06.Module06App</mainClass>
+									<mainClass>neu.dtampubolon.connecteddevices.labs.module06.Module06App</mainClass>
 									<classpathPrefix>dep-libs/</classpathPrefix>
 								</manifest>
 							</archive>
@@ -134,7 +134,7 @@
 							<archive>
 								<manifest>
 									<addClasspath>true</addClasspath>
-									<mainClass>schooldomain.studentname.connecteddevices.labs.module07.Module07App</mainClass>
+									<mainClass>neu.dtampubolon.connecteddevices.labs.module07.Module07App</mainClass>
 									<classpathPrefix>dep-libs/</classpathPrefix>
 								</manifest>
 							</archive>
@@ -154,7 +154,7 @@
 							<archive>
 								<manifest>
 									<addClasspath>true</addClasspath>
-									<mainClass>schooldomain.studentname.connecteddevices.labs.module08.Module08App</mainClass>
+									<mainClass>neu.dtampubolon.connecteddevices.labs.module08.Module08App</mainClass>
 									<classpathPrefix>dep-libs/</classpathPrefix>
 								</manifest>
 							</archive>
@@ -174,7 +174,7 @@
 							<archive>
 								<manifest>
 									<addClasspath>true</addClasspath>
-									<mainClass>schooldomain.studentname.connecteddevices.project.SemesterProjectApp</mainClass>
+									<mainClass>neu.dtampubolon.connecteddevices.project.SemesterProjectApp</mainClass>
 									<classpathPrefix>dep-libs/</classpathPrefix>
 								</manifest>
 							</archive>
