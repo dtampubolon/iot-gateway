@@ -39,10 +39,9 @@ public class TempManagementApp {
 		System.out.println("Object:");
 		System.out.println(sd+"\n");
 		
-		SensorData sd2 = new SensorData();
 		//TEST: Convert an objet to a json string
 		System.out.println("Convert from object to JSON:");
-		System.out.println(du.sensorDataToJson(sd2));
+		System.out.println(du.sensorDataToJson(sd));
 		
 	}
 }
