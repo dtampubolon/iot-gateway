@@ -1,7 +1,7 @@
 /**
  * 
  */
-package schooldomain.studentname.connecteddevices.labs.module05;
+package neu.dtampubolon.connecteddevices.labs.module05;
 
 import java.util.logging.Logger;
 

@@ -13,7 +13,7 @@ import java.util.Date;
  */
 public class SensorData {
 
-	/**
+	/** 
 	 * This class keeps track of the maximum, minimum, and average temperature readings
 	 */
 	private String timeStamp;
