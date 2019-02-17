@@ -22,7 +22,9 @@ public class TempManagementApp {
 	DataUtil du;
 	String fileName;
 	SensorData sd;
+	
 	public TempManagementApp() {
+		//App constructor
 		fileName = "C:\\Users\\Doni Tampubolon\\Documents\\Grad School\\CSYE6530\\gitrepo\\iot-device\\apps\\labs\\data\\Data.json";
 		du = new DataUtil();
 	}
@@ -32,6 +34,7 @@ public class TempManagementApp {
 		app.run();
 		
 	}
+	
 	public void run() {
 		//TEST: Read json from a file and convert to SensorData object
 		sd = du.jsonToSensorData(fileName);

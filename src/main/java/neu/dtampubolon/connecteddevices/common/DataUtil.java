@@ -67,7 +67,7 @@ public class DataUtil {
 	}
 	
 	/**
-	 * 
+	 * This method reads a json file and converts it into ActuatorData
 	 * @param dataFile: name and location of json string file
 	 * @return ActuatorData object
 	 */
@@ -80,7 +80,7 @@ public class DataUtil {
 	}
 	
 	/**
-	 * 
+	 * This method reads a json file and converts it into SensorData
 	 * @param dataFile: name and location of json string file
 	 * @return SensorData object
 	 */
@@ -109,7 +109,7 @@ public class DataUtil {
 			try {
 				jsonString = new String(Files.readAllBytes(Paths.get(fileName)));
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				// Catch if an Exception is thrown, print stack trace
 				e.printStackTrace();
 			}
 			return jsonString;
