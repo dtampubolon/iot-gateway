@@ -29,7 +29,13 @@ public class SensorData {
 	
 	public SensorData() {
 		// Constructor
-		timeStamp = new Date().toString();	
+		timeStamp = new Date().toString();
+		name = "";
+	}
+	
+	public SensorData(String name) {
+		//Alternate constructor
+		setName(name);
 	}
 	
 	/**
