@@ -113,10 +113,11 @@ public class MqttClientConnector implements MqttCallback{
 	public void messageArrived(String topic, MqttMessage message) throws Exception {
 		// TODO Auto-generated method stub
 		String time = new Timestamp(System.currentTimeMillis()).toString();
+		System.out.println("New message received:");
 		System.out.println("Time:\t" +time +
-                "  Topic:\t" + topic +
-                "  Message:\t" + new String(message.getPayload()) +
-                "  QoS:\t" + message.getQos());
+                "  \nTopic:\t" + topic +
+                "  \nMessage:\t" + new String(message.getPayload()) +
+                "  \nQoS:\t" + message.getQos());
 		
 		lastRecMsg = new String(message.getPayload());
 	}
