@@ -68,7 +68,7 @@ public class MqttPubClientTestApp {
 		
 		_mqttClient.publish(topic, qos, payload);
 		
-		Thread.sleep(30000);
+		Thread.sleep(300000);
 		
 		_mqttClient.disconnect();
 	}

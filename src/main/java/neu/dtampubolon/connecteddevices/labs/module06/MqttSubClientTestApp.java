@@ -60,11 +60,14 @@ public class MqttSubClientTestApp {
 		_mqttClient.subscribe(topic, qos);
 		
 		try {
-			Thread.sleep(30000);
+			Thread.sleep(300000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		//Unsubscribe
+		_mqttClient.unsubscribe(topic);
 		
 		//disconnect
 		_mqttClient.disconnect();
