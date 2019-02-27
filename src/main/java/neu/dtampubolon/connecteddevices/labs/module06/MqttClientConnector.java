@@ -70,7 +70,15 @@ public class MqttClientConnector implements MqttCallback{
 		
 		System.out.println("Disconnected successfully from " + brokerUrl);
 	}
-	
+    
+	/**
+     * Subscribe to a topic on an MQTT server
+     * Once subscribed this method waits for the messages to arrive from the server
+     * that match the subscription. It continues listening for messages until the enter key is
+     * pressed.
+     * @param topic to subscribe to
+     * @param qos the maximum quality of service to receive messages at for this subscription
+     */
 	public void subscribe(String topic, int qos) {
 		System.out.println("Subscribing to topic \"" + topic + "\" QoS: " + qos );
 		
@@ -91,8 +99,14 @@ public class MqttClientConnector implements MqttCallback{
 		}
 	}
 	
+    /**
+     * This function is called in order to publish a message to an MQTT server
+     * @param topic the name of the topic to publish to
+     * @param qos the quality of service to delivery the message at (0,1,2)
+     * @param payload to send to the MQTT server
+     */
 	public void publish(String topic, int qos, String payload) {
-		System.out.println("Publishing to topic: " + topic + "\t QoS: " + qos);
+		System.out.println("Publishing " + payload + " to topic: " + topic + "\t QoS: " + qos);
 		MqttMessage message = new MqttMessage(payload.getBytes());
 		message.setQos(qos);
 		
@@ -103,12 +117,20 @@ public class MqttClientConnector implements MqttCallback{
 		}
 	}
 	
+	//Callback methods
+	/**
+	 * This method is called when connection to MQTT broker is lost
+	 */
 	@Override
 	public void connectionLost(Throwable cause) {
 		System.out.println("Connection lost because: " + cause);
 		System.exit(1);
 	}
 
+	/**
+	 * This method is called when a message from the broker arrives 
+	 * that matches the subscription made by the client
+	 */
 	@Override
 	public void messageArrived(String topic, MqttMessage message) throws Exception {
 		// TODO Auto-generated method stub
@@ -122,32 +144,41 @@ public class MqttClientConnector implements MqttCallback{
 		lastRecMsg = new String(message.getPayload());
 	}
 
+	/**
+	 * This method is called when a message has been delivered to the broker
+	 */
 	@Override
 	public void deliveryComplete(IMqttDeliveryToken token) {
 		System.out.println("Message has been delivered to broker");
 		
 	}
 
+	//This method returns client ID
 	public String getClientID() {
 		return clientID;
 	}
 
+	//This method is used to set client ID
 	public void setClientID(String clientID) {
 		this.clientID = clientID;
 	}
 
+	//This method is used to get current broker URL
 	public String getBrokerUrl() {
 		return brokerUrl;
 	}
 
+	//This method is used to set a new broker URL
 	public void setBrokerUrl(String brokerUrl) {
 		this.brokerUrl = brokerUrl;
 	}
 
+	//This method is used to get the QoS that has been set
 	public int getQos() {
 		return qos;
 	}
-
+	
+	//This method is used to set the Quality of Service (QoS) of the MQTT connection
 	public void setQos(int qos) {
 		this.qos = qos;
 	}

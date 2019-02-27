@@ -15,7 +15,7 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 public class MqttPubClientTestApp {
 
 	/**
-	 * 
+	 * This class is an MQTT client that connects to an MQTT broker and publishes messages
 	 */
 	
 	private static final Logger _Logger = Logger.getLogger(MqttPubClientTestApp.class.getName());
@@ -37,6 +37,7 @@ public class MqttPubClientTestApp {
 	}
 
 	/**
+	 * Main method of app
 	 * @param args
 	 */
 	public static void main(String[] args) {
@@ -52,6 +53,9 @@ public class MqttPubClientTestApp {
 		
 	}
 	
+	/*
+	 * This method runs the app
+	 */
 	public void run() throws MqttException, InterruptedException {
 		_mqttClient.connect();
 		topic = "Topic-CSYE6530";

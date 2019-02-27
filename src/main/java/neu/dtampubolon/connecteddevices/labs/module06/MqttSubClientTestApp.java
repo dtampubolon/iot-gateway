@@ -15,7 +15,7 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 public class MqttSubClientTestApp {
 
 	/**
-	 * 
+	 * This class is an MQTT client that connects to an MQTT broker, subscribes to a topic and waits for new messages from the topic
 	 */	
 	private static final Logger _Logger = Logger.getLogger(MqttSubClientTestApp.class.getName());
 	
@@ -36,21 +36,21 @@ public class MqttSubClientTestApp {
 	}
 
 	/**
+	 * Main method of app
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		MqttSubClientTestApp _App = new MqttSubClientTestApp();
 		
 		try {
 			_App.run();
 		} catch (MqttException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 	}
 	
+	//This method runs the app
 	public void run() throws MqttException {
 		_mqttClient.connect();
 
