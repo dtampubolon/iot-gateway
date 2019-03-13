@@ -12,10 +12,34 @@ public class CoapServerConnector {
 
 	private static final Logger _Logger = Logger.getLogger(CoapServerConnector.class.getName());
 	private CoapServer _coapServer;
-	
+	private String resourceName;
+	/**
+	 * Constructor
+	 */
 	public CoapServerConnector() {
-		// TODO Auto-generated constructor stub
-		super()
+		super();
+		resourceName = "json/";
 	}
-
+	
+	/**
+	 * 
+	 * @param resource
+	 */
+	public void addResource(CoapResource resource) {
+		if(resource != null) {
+			_coapServer.add(resource);
+		}
+	}
+	
+	public void start() {
+		if(_coapServer == null) {
+			_Logger.info("Creating CoAP server instance and 'temp' resource handler...");
+			
+			_coapServer = new CoapServer();
+			
+			TempResourceHandler tempHandler = new TempResourceHandler(resourceName);
+			
+			_coapServer.add(tempHandler);
+		}
+	}
 }

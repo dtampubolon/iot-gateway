@@ -11,8 +11,10 @@ import java.util.logging.Logger;
 
 import org.eclipse.californium.core.CoapClient;
 import org.eclipse.californium.core.CoapHandler;
+import org.eclipse.californium.core.CoapObserveRelation;
 import org.eclipse.californium.core.CoapResponse;
 import org.eclipse.californium.core.WebLink;
+import org.eclipse.californium.core.coap.MediaTypeRegistry;
 
 /**
  * @author Doni Tampubolon
@@ -32,10 +34,15 @@ public class CoapClientConnector {
 	private CoapClient _clientConn;
 	private boolean useNON = false; //Use nonconfirmable message
 	private boolean _isInitialized = false;
+	private CoapObserveRelation relation1;
 	//private String resourceName;
 	
+	/**
+	 * Constructor
+	 * @param host
+	 * @param isSecure
+	 */
 	public CoapClientConnector(String host, boolean isSecure) {
-		// TODO Auto-generated constructor stub
 		if (isSecure) {
 			_protocol = ConfigConst.SECURE_COAP_PROTOCOL;
 			_port = ConfigConst.SECURE_COAP_PORT;
@@ -59,7 +66,9 @@ public class CoapClientConnector {
 		}
 	
 	//Public methods
-	
+	/**
+	 * 
+	 */
 	public void discoverResources() {
 		_Logger.info("Issuing discover to server...");
 		
@@ -72,22 +81,23 @@ public class CoapClientConnector {
 		}
 	}
 	
+	/**
+	 * 
+	 * @param resourceName
+	 */
 	public void sendGetRequest(String resourceName) {
 		initClient(resourceName);
 		
 		if(useNON) {
 			_clientConn.useNONs();
 		}
-		
 		else { 
 			_clientConn.useCONs();
 		}
-		//Implement the rest
 		_clientConn.get(new CoapHandler() {
 
 			@Override
 			public void onLoad(CoapResponse response) {
-				// TODO Auto-generated method stub
 				String content = response.getResponseText();
 				_Logger.info("RESPONSE FROM SERVER: " + content);
 			}
@@ -100,26 +110,104 @@ public class CoapClientConnector {
 		});
 	}
 	
-	public void sendPutRequest(String resourceName){
+	/**
+	 * 
+	 * @param resourceName
+	 * @param payload
+	 */
+	public void sendPutRequest(String resourceName, String payload){
+		initClient(resourceName);
 		
+		if(useNON) {
+			_clientConn.useNONs();
+		}
+		else { 
+			_clientConn.useCONs();
+		}
+		
+		_Logger.info("Sending PUT request to: " + _serverAddr + "/" +  resourceName);
+		CoapResponse response = _clientConn.put(payload, MediaTypeRegistry.APPLICATION_JSON);
+		_Logger.info("RESPONSE FROM SERVER: " + response.getResponseText());
 	}
 	
-	public void sendPostRequest(String resourceName) {
-		
+	/**
+	 * 
+	 * @param resourceName
+	 * @param payload
+	 */
+	public void sendPostRequest(String resourceName, String payload) {
+		if(useNON) {
+			_clientConn.useNONs();
+		}
+		else { 
+			_clientConn.useCONs();
+		}
+		_Logger.info("Sending POST request to: " + _serverAddr + "/" +  resourceName);
+		CoapResponse response = _clientConn.post(payload, MediaTypeRegistry.APPLICATION_JSON);
+		_Logger.info("RESPONSE FROM SERVER: " + response.getResponseText());
 	}
 	
 	public void sendDeleteRequest(String resourceName) {
-		
+		_Logger.info("Sending DELETE request to: " + _serverAddr + "/" + resourceName);
+		CoapResponse response = _clientConn.delete();
+		_Logger.info("RESPONSE FROM SERVER: " + response.getResponseText());
 	}
 	
+	/**
+	 * 
+	 * @param resourceName
+	 */
 	public void sendObserveRequest(String resourceName) {
-		initClient(resourceName)
+		initClient(resourceName);
+		if(useNON) {
+			_clientConn.useNONs();
+		}
+		else { 
+			_clientConn.useCONs();
+		}
+		
+		_Logger.info("------\nGET " + resourceName + " with Observe");
+		
+		relation1 = _clientConn.observe(new CoapHandler() {
+
+			@Override
+			public void onLoad(CoapResponse response) {
+				// TODO Auto-generated method stub
+				String content = response.getResponseText();
+				_Logger.info("NOTIFICATION: " + content);
+			}
+
+			@Override
+			public void onError() {
+				// TODO Auto-generated method stub
+				_Logger.warning("OBSERVATION FAILED");
+			}
+		});
 	}
 	
+	/**
+	 * 
+	 */
+	public void cancelObserve() {
+		if(!_isInitialized) {
+			return;
+		}
+		else if(relation1!=null) {
+			relation1.proactiveCancel();
+		}
+	}
+	
+	/**
+	 * 
+	 */
 	private void initClient() {
 		initClient(null);
 	}
 	
+	/**
+	 * 
+	 * @param resourceName
+	 */
 	private void initClient(String resourceName) {
 		if (_isInitialized) {
 			return;
@@ -141,10 +229,13 @@ public class CoapClientConnector {
 		}
 		catch (Exception e) {
 			_Logger.log(Level.SEVERE, "Failed to connect to server: " + getCurrentUri(), e);
-		}
-		
+		}	
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	private String getCurrentUri() {
 		return _clientConn.getURI();
 	}
