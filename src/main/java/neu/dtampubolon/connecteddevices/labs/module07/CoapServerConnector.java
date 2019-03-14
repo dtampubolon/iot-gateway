@@ -23,7 +23,7 @@ public class CoapServerConnector {
 	 */
 	public CoapServerConnector() {
 		super();
-		resourceName = "json/";
+		resourceName = "json";
 	}
 	
 	/**
