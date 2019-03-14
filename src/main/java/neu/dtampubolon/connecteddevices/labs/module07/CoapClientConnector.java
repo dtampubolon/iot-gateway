@@ -56,7 +56,7 @@ public class CoapClientConnector {
 			_host = host;
 		}
 		else {
-			_host = ConfigConst.DEFAULT_COAP_SERVER;
+			_host = "127.0.0.1";
 		}
 		
 		//URL does not have a protocol handler 
@@ -126,7 +126,7 @@ public class CoapClientConnector {
 		}
 		
 		_Logger.info("Sending PUT request to: " + _serverAddr + "/" +  resourceName);
-		CoapResponse response = _clientConn.put(payload, MediaTypeRegistry.APPLICATION_JSON);
+		CoapResponse response = _clientConn.put(payload, MediaTypeRegistry.TEXT_PLAIN);
 		_Logger.info("RESPONSE FROM SERVER: " + response.getResponseText());
 	}
 	
@@ -136,6 +136,7 @@ public class CoapClientConnector {
 	 * @param payload
 	 */
 	public void sendPostRequest(String resourceName, String payload) {
+		initClient(resourceName);
 		if(useNON) {
 			_clientConn.useNONs();
 		}
@@ -143,7 +144,7 @@ public class CoapClientConnector {
 			_clientConn.useCONs();
 		}
 		_Logger.info("Sending POST request to: " + _serverAddr + "/" +  resourceName);
-		CoapResponse response = _clientConn.post(payload, MediaTypeRegistry.APPLICATION_JSON);
+		CoapResponse response = _clientConn.post(payload, MediaTypeRegistry.TEXT_PLAIN);
 		_Logger.info("RESPONSE FROM SERVER: " + response.getResponseText());
 	}
 	
