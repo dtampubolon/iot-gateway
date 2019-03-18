@@ -12,13 +12,14 @@ public class CoapServerTestApp {
 	private static CoapServerConnector _coapServer;
 	private static CoapServerTestApp app;
 	/**
+	 * This app is used to test the CoAP server functionalities
 	 * Constructor
 	 */
 	public CoapServerTestApp() {
 		super();
 	}
 
-	/**
+	/** Main method
 	 * @param args
 	 */
 	public static void main(String[] args) {

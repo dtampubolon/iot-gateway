@@ -80,6 +80,20 @@ public class DataUtil {
 	}
 	
 	/**
+	 * This method accepts a JSOn string and converts it into SensorData
+	 * @param dataFile: name and location of json string file
+	 * @return ActuatorData object
+	 */
+	public SensorData jsonToSensorData(String jsonData, boolean isJSON) {
+		SensorData sd = null;
+		if(isJSON) {
+			Gson gson = new Gson();
+			sd = gson.fromJson(jsonData, SensorData.class);
+		}
+		return sd;
+	}
+	
+	/**
 	 * This method reads a json file and converts it into SensorData
 	 * @param dataFile: name and location of json string file
 	 * @return SensorData object

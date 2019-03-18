@@ -58,10 +58,10 @@ public class CoapClientTestApp {
 		
 		_coapClient = new CoapClientConnector("127.0.0.1", false);
 		//System.out.println("Sending discover request..");
-		//_coapClient.discoverResources();
+		_coapClient.discoverResources();
 		
 		//System.out.println("Sending get request..");
-		_coapClient.sendGetRequest("json");
+		//_coapClient.sendGetRequest("json");
 		//_coapClient.sendPostRequest("json", payload);
 		//NOTE: has to stop calling initClient for every request
 		try {

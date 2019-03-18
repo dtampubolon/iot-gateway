@@ -67,7 +67,7 @@ public class CoapClientConnector {
 	
 	//Public methods
 	/**
-	 * 
+	 * This method is called by a CoAP client to discover the resources available in a CoAP server
 	 */
 	public void discoverResources() {
 		_Logger.info("Issuing discover to server...");
@@ -82,7 +82,7 @@ public class CoapClientConnector {
 	}
 	
 	/**
-	 * 
+	 * This method is called when a client wants to sent a GET request to the server
 	 * @param resourceName
 	 */
 	public void sendGetRequest(String resourceName) {
@@ -111,7 +111,7 @@ public class CoapClientConnector {
 	}
 	
 	/**
-	 * 
+	 * This method is called when a CoAP client wants to PUT a payload into a CoAP server
 	 * @param resourceName
 	 * @param payload
 	 */
@@ -131,7 +131,7 @@ public class CoapClientConnector {
 	}
 	
 	/**
-	 * 
+	 * This method is called when a CoAp client wants to POST a payload into a CoAP server
 	 * @param resourceName
 	 * @param payload
 	 */
@@ -148,6 +148,10 @@ public class CoapClientConnector {
 		_Logger.info("RESPONSE FROM SERVER: " + response.getResponseText());
 	}
 	
+	/**
+	 * This method is called when a CoAP client wants to delete a resource in a CoAP server 
+	 * @param resourceName
+	 */
 	public void sendDeleteRequest(String resourceName) {
 		_Logger.info("Sending DELETE request to: " + _serverAddr + "/" + resourceName);
 		CoapResponse response = _clientConn.delete();
@@ -155,7 +159,7 @@ public class CoapClientConnector {
 	}
 	
 	/**
-	 * 
+	 * This method is used when a CoAP client wants to observe a particular resource in a CoAP server
 	 * @param resourceName
 	 */
 	public void sendObserveRequest(String resourceName) {
@@ -187,7 +191,7 @@ public class CoapClientConnector {
 	}
 	
 	/**
-	 * 
+	 * This method is called when a CoAP client wants to stop observing a resource in a CoAP server
 	 */
 	public void cancelObserve() {
 		if(!_isInitialized) {
@@ -199,14 +203,14 @@ public class CoapClientConnector {
 	}
 	
 	/**
-	 * 
+	 * This method is used to initialize CoAP client
 	 */
 	private void initClient() {
 		initClient(null);
 	}
 	
 	/**
-	 * 
+	 * This method is used to initialize a CoAP client
 	 * @param resourceName
 	 */
 	private void initClient(String resourceName) {
@@ -234,7 +238,7 @@ public class CoapClientConnector {
 	}
 	
 	/**
-	 * 
+	 * This method is used to get the current URI
 	 * @return
 	 */
 	private String getCurrentUri() {

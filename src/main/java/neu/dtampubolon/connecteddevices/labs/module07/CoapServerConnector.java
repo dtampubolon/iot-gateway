@@ -27,7 +27,7 @@ public class CoapServerConnector {
 	}
 	
 	/**
-	 * 
+	 * This method is called to add a new CoAP resource
 	 * @param resource
 	 */
 	public void addResource(CoapResource resource) {
@@ -36,6 +36,9 @@ public class CoapServerConnector {
 		}
 	}
 	
+	/**
+	 * This method is called to bind the CoAP server connections to the IPv4 addresses of device
+	 */
 	private void addEndpoints() {
     	for (InetAddress addr : EndpointManager.getEndpointManager().getNetworkInterfaces()) {
     		// only binds to IPv4 addresses and localhost
@@ -45,7 +48,9 @@ public class CoapServerConnector {
 			}
 		}
     }
-	
+	/**
+	 * This method is called to start the CoAP server
+	 */
 	public void start() {
 		if(_coapServer == null) {
 			_Logger.info("Creating CoAP server instance and 'temp' resource handler...");
@@ -61,6 +66,10 @@ public class CoapServerConnector {
 			_coapServer.start();
 		}
 	}
+	
+	/**
+	 * This method is called to stop the CoAP server
+	 */
 	public void stop() {
 		_Logger.info("Stopping CoAP server...");
 		_coapServer.stop();
