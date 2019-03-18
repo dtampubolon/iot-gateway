@@ -231,6 +231,8 @@ public class CoapClientConnector {
 			_clientConn = new CoapClient(_serverAddr);
 			
 			_Logger.info("Created client conenction to server / resource: " + _serverAddr);
+			
+			_clientConn.ping();
 		}
 		catch (Exception e) {
 			_Logger.log(Level.SEVERE, "Failed to connect to server: " + getCurrentUri(), e);
@@ -244,4 +246,14 @@ public class CoapClientConnector {
 	private String getCurrentUri() {
 		return _clientConn.getURI();
 	}
+	
+	/**
+	 * This method is used to PING the CoAP server
+	 */
+	/*public void sendPING() {
+		if(_isInitialized) {
+			_clientConn.ping();
+		}
+	}*/
+	
 }
