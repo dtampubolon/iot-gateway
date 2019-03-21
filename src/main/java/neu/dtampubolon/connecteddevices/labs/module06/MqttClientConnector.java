@@ -4,14 +4,21 @@
 package neu.dtampubolon.connecteddevices.labs.module06;
 
 import org.eclipse.paho.client.mqttv3.MqttCallback;
+
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
+import com.labbenchstudios.edu.connecteddevices.common.CertManagementUtil;
+
+import java.security.KeyManagementException;
+import java.security.KeyStore;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Timestamp;
 
+import javax.net.ssl.SSLSocketFactory;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 
 /**
@@ -32,30 +39,62 @@ public class MqttClientConnector implements MqttCallback{
 	//private String topic;
 	//private String payload;
 	private String brokerUrl;
-	private boolean clean = true;
+	private boolean clean = true; //decides whether previous session's data are saved by the broker(false) or not (true).
 	private int qos;
 	private String lastRecMsg;
-	
-	//private String password;
-	//private String username;
+	private String certFilePath;
+	private String username; //Ubidots auth TOKEN
+	private String password =""; //blank for ubidots
+	private SSLSocketFactory sslSockFac;
+	private boolean tls = false;
 	
 	public MqttClientConnector(String brokerUrl, String clientID) {
 		// Constructor
 		this.brokerUrl = brokerUrl;
 		this.clientID = clientID;
-		//this.password = password;
-		//this.username = username; 
 		
 		conOpt = new MqttConnectOptions();
 		conOpt.setCleanSession(clean);
 	}
 	
-	public void connect() throws MqttException{
-		client = new MqttClient(brokerUrl, clientID, new MemoryPersistence());
-		client.setCallback(this);
-		System.out.println("Connecting to " + brokerUrl + " with client ID " + clientID);
-		client.connect(conOpt);
-		System.out.println("Connected to " + brokerUrl + "\n");
+	//Alternate constructor
+	public MqttClientConnector(String brokerUrl, String authToken, String certFilePath) {
+		this.brokerUrl = brokerUrl;
+		this.clientID = MqttClient.generateClientId();
+		this.certFilePath = certFilePath;
+		this.username = authToken;
+		//sslSockFac = CertManagementUtil.getInstance().loadCertificate(certFilePath);
+
+		conOpt = new MqttConnectOptions();
+		conOpt.setCleanSession(clean);
+		
+		tls = true;
+	}
+	
+	public void connect() throws MqttException, NoSuchAlgorithmException, KeyManagementException{
+		//Don't use MemoryPersistence to store data if reliability is required i.e. when clean session is set to false.
+		//when clean session is false, use MqttDefaultFilePersistence
+		if(tls) {
+			client = new MqttClient(brokerUrl, clientID, new MemoryPersistence());
+			
+			conOpt.setUserName(username);
+			conOpt.setPassword(password.toCharArray());
+			
+			//this next line is only needed if certificate has not been loaded as trusted cert by the JVM
+			//conOpt.setSocketFactory(sslSockFac);
+			
+			System.out.println("Connecting to " + brokerUrl + " with client ID " + clientID);
+			client.connect(conOpt);
+			System.out.println("Connected to " + brokerUrl + "\n");
+
+		}
+		else {
+			client = new MqttClient(brokerUrl, clientID, new MemoryPersistence());
+			client.setCallback(this);
+			System.out.println("Connecting to " + brokerUrl + " with client ID " + clientID);
+			client.connect(conOpt);
+			System.out.println("Connected to " + brokerUrl + "\n");
+		}
 	}
 	
 	public void disconnect() {
@@ -87,6 +126,7 @@ public class MqttClientConnector implements MqttCallback{
 		} catch (MqttException e) {
 			e.printStackTrace();
 		}
+		System.out.println("Subscription successful!");
 	}
 	
 	public void unsubscribe(String topic) {

@@ -3,6 +3,8 @@
  */
 package neu.dtampubolon.connecteddevices.labs.module06;
 
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.util.logging.Logger;
 import neu.dtampubolon.connecteddevices.common.*;
 
@@ -44,14 +46,14 @@ public class MqttSubClientTestApp {
 		
 		try {
 			_App.run();
-		} catch (MqttException e) {
+		} catch (MqttException | KeyManagementException | NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		}
 		
 	}
 	
 	//This method runs the app
-	public void run() throws MqttException {
+	public void run() throws MqttException, KeyManagementException, NoSuchAlgorithmException {
 		_mqttClient.connect();
 
 		topic = "Topic-CSYE6530";
