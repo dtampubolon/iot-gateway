@@ -80,7 +80,7 @@ public class MqttClientConnector implements MqttCallback{
 			conOpt.setUserName(username);
 			conOpt.setPassword(password.toCharArray());
 			
-			//this next line is only needed if certificate has not been loaded as trusted cert by the JVM
+			//this next line of code is only needed if certificate has not been loaded as trusted cert by the JVM
 			//conOpt.setSocketFactory(sslSockFac);
 			
 			System.out.println("Connecting to " + brokerUrl + " with client ID " + clientID);

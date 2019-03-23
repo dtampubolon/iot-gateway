@@ -126,7 +126,7 @@ public class CoapClientConnector {
 		}
 		
 		_Logger.info("Sending PUT request to: " + _serverAddr + "/" +  resourceName);
-		CoapResponse response = _clientConn.put(payload, MediaTypeRegistry.TEXT_PLAIN);
+		CoapResponse response = _clientConn.put(payload, MediaTypeRegistry.APPLICATION_JSON);
 		_Logger.info("RESPONSE FROM SERVER: " + response.getResponseText());
 	}
 	
@@ -143,8 +143,8 @@ public class CoapClientConnector {
 		else { 
 			_clientConn.useCONs();
 		}
-		_Logger.info("Sending POST request to: " + _serverAddr + "/" +  resourceName);
-		CoapResponse response = _clientConn.post(payload, MediaTypeRegistry.TEXT_PLAIN);
+		_Logger.info("Sending POST request to: " + _serverAddr);
+		CoapResponse response = _clientConn.post(payload, MediaTypeRegistry.APPLICATION_JSON);
 		_Logger.info("RESPONSE FROM SERVER: " + response.getResponseText());
 	}
 	
@@ -153,7 +153,7 @@ public class CoapClientConnector {
 	 * @param resourceName
 	 */
 	public void sendDeleteRequest(String resourceName) {
-		_Logger.info("Sending DELETE request to: " + _serverAddr + "/" + resourceName);
+		_Logger.info("Sending DELETE request to: " + _serverAddr);
 		CoapResponse response = _clientConn.delete();
 		_Logger.info("RESPONSE FROM SERVER: " + response.getResponseText());
 	}
