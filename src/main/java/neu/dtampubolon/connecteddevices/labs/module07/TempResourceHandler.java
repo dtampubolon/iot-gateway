@@ -61,7 +61,6 @@ public class TempResourceHandler extends CoapResource {
 	     exchange.accept();
 	     payload = exchange.getRequestText();
 	     exchange.respond(ResponseCode.CREATED, "Resource CREATED");
-	     
 	     _Logger.info("Received payload from client: " + payload);
 	     _Logger.info("Converting JSON to SensorData object");
 	     sd = du.jsonToSensorData(payload, true);
@@ -83,7 +82,7 @@ public class TempResourceHandler extends CoapResource {
     
 	     _Logger.info("Received payload from client: " + payload);
 	     _Logger.info("Converting JSON to SensorData object");
-	     sd = du.jsonToSensorData(payload);
+	     sd = du.jsonToSensorData(payload, true);
 	     _Logger.info("\nConverting SensorData object back to JSON string:");
 	     _Logger.info("Result: " + du.sensorDataToJson(sd));      
 	     
