@@ -22,6 +22,7 @@ public class TempActuatorSubscriberApp {
 	private String name;
 	private String authToken;
 	private String certFilePath;
+	
 	public TempActuatorSubscriberApp() {
 		authToken = "A1E-Sv1nHOuzR8M950zKv6yWTipuRMjTcN";
 		brokerUrl = "ssl://things.ubidots.com:8883";
@@ -30,6 +31,7 @@ public class TempActuatorSubscriberApp {
 		qos = 2;
 		_mqttClient = new MqttClientConnector(brokerUrl, authToken, certFilePath);
 		topic = "/v1.6/devices/thermostat/tempactuator/lv";
+		
 	}
 	
 	public static void main(String[] args) {
@@ -45,7 +47,7 @@ public class TempActuatorSubscriberApp {
 			e.printStackTrace();
 		}
 		
-		_mqttClient.subscribe(topic, 2);
+		_mqttClient.subscribe(topic, 1);
 				
 		try {
 			Thread.sleep(300000);
