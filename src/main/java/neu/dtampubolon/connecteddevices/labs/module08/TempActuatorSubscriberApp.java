@@ -23,6 +23,7 @@ public class TempActuatorSubscriberApp {
 	private String authToken;
 	private String certFilePath;
 	
+	//Constructor
 	public TempActuatorSubscriberApp() {
 		authToken = "A1E-Sv1nHOuzR8M950zKv6yWTipuRMjTcN";
 		brokerUrl = "ssl://things.ubidots.com:8883";
@@ -34,11 +35,15 @@ public class TempActuatorSubscriberApp {
 		
 	}
 	
+	//Main method
 	public static void main(String[] args) {
 		TempActuatorSubscriberApp _App = new TempActuatorSubscriberApp();
 		_App.run();
 	}
 
+	/**
+	 * When this method is called, app connects to the broker and subscribes to a topic
+	 */
 	public void run() {
 		try {
 			_mqttClient.connect();

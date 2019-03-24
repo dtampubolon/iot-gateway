@@ -68,6 +68,7 @@ public class MqttPubClientTestApp {
 		sensorData.addValue(22.1);
 		sensorData.addValue(25.5);
 		sensorData.addValue(26.9);
+		sensorData.addValue(19.1);
 		
 		//Convert sensorData to json string
 		payload = dataUtil.sensorDataToJson(sensorData);
