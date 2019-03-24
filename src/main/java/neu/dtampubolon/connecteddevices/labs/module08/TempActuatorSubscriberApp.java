@@ -25,13 +25,19 @@ public class TempActuatorSubscriberApp {
 	
 	//Constructor
 	public TempActuatorSubscriberApp() {
-		authToken = "A1E-Sv1nHOuzR8M950zKv6yWTipuRMjTcN";
+		authToken = "A1E-hMdOquJJDl7WpbktCODvEcI04LZhcs";
 		brokerUrl = "ssl://things.ubidots.com:8883";
 		certFilePath = "C:\\Users\\Doni Tampubolon\\Documents\\Grad School\\CSYE6530\\gitrepo\\iot-gateway\\src\\main\\java\\neu\\dtampubolon\\connecteddevices\\common\\ubidots_cert.pem";
 		sensorData = new SensorData();
-		qos = 2;
-		_mqttClient = new MqttClientConnector(brokerUrl, authToken, certFilePath);
+		qos = 0;
+		_mqttClient = new MqttClientConnector(brokerUrl, authToken, certFilePath, authToken);
 		topic = "/v1.6/devices/thermostat/tempactuator/lv";
+		
+		
+		/* For debugging purposes:
+		 * brokerUrl = "tcp://things.ubidots.com:1883";
+		_mqttClient = new MqttClientConnector(brokerUrl, authToken,certFilePath, authToken);
+		*/
 		
 	}
 	
@@ -52,14 +58,15 @@ public class TempActuatorSubscriberApp {
 			e.printStackTrace();
 		}
 		
-		_mqttClient.subscribe(topic, 1);
-				
+		_mqttClient.subscribe(topic, qos);
+
 		try {
 			Thread.sleep(300000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		
 	}
 }

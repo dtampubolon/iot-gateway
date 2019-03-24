@@ -31,7 +31,7 @@ public class TempSensorPublisherApp {
 		certFilePath = "C:\\Users\\Doni Tampubolon\\Documents\\Grad School\\CSYE6530\\gitrepo\\iot-gateway\\src\\main\\java\\neu\\dtampubolon\\connecteddevices\\common\\ubidots_cert.pem";
 		sensorData = new SensorData();
 		qos = 1;
-		_mqttClient = new MqttClientConnector(brokerUrl, authToken, certFilePath);
+		_mqttClient = new MqttClientConnector(brokerUrl, authToken, certFilePath, "");
 		topic = "/v1.6/devices/thermostat";
 	}
 

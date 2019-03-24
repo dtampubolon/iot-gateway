@@ -67,11 +67,12 @@ public class MqttClientConnector implements MqttCallback{
 	 * @param authToken
 	 * @param certFilePath
 	 */
-	public MqttClientConnector(String brokerUrl, String authToken, String certFilePath) {
+	public MqttClientConnector(String brokerUrl, String authToken, String certFilePath, String password) {
 		this.brokerUrl = brokerUrl;
 		this.clientID = MqttClient.generateClientId();
 		this.certFilePath = certFilePath;
 		this.username = authToken;
+		this.password = password;
 		//sslSockFac = CertManagementUtil.getInstance().loadCertificate(certFilePath);
 
 		conOpt = new MqttConnectOptions();
@@ -91,7 +92,7 @@ public class MqttClientConnector implements MqttCallback{
 		//when clean session is false, use MqttDefaultFilePersistence
 		if(tls) {
 			client = new MqttClient(brokerUrl, clientID, new MemoryPersistence());
-			
+			client.setCallback(this);
 			conOpt.setUserName(username);
 			conOpt.setPassword(password.toCharArray());
 			

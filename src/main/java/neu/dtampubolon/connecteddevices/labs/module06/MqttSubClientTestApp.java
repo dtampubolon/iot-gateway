@@ -68,7 +68,7 @@ public class MqttSubClientTestApp {
 			e.printStackTrace();
 		}
 		
-		//Unsubscribe
+		//Unsubscribe	
 		_mqttClient.unsubscribe(topic);
 		
 		//disconnect
