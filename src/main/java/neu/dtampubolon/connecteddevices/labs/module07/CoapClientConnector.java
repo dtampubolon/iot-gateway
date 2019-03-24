@@ -125,7 +125,7 @@ public class CoapClientConnector {
 			_clientConn.useCONs();
 		}
 		
-		_Logger.info("Sending PUT request to: " + _serverAddr + "/" +  resourceName);
+		_Logger.info("Sending PUT request to: " + _serverAddr);
 		CoapResponse response = _clientConn.put(payload, MediaTypeRegistry.APPLICATION_JSON);
 		_Logger.info("RESPONSE FROM SERVER: " + response.getResponseText());
 	}

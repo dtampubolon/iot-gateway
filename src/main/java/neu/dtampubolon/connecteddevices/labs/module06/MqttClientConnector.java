@@ -48,8 +48,12 @@ public class MqttClientConnector implements MqttCallback{
 	private SSLSocketFactory sslSockFac;
 	private boolean tls = false;
 	
+	/**
+	 * Constructor
+	 * @param brokerUrl
+	 * @param clientID
+	 */
 	public MqttClientConnector(String brokerUrl, String clientID) {
-		// Constructor
 		this.brokerUrl = brokerUrl;
 		this.clientID = clientID;
 		
@@ -57,7 +61,12 @@ public class MqttClientConnector implements MqttCallback{
 		conOpt.setCleanSession(clean);
 	}
 	
-	//Alternate constructor
+	/**
+	 * Alternate constructor
+	 * @param brokerUrl
+	 * @param authToken
+	 * @param certFilePath
+	 */
 	public MqttClientConnector(String brokerUrl, String authToken, String certFilePath) {
 		this.brokerUrl = brokerUrl;
 		this.clientID = MqttClient.generateClientId();
@@ -71,6 +80,12 @@ public class MqttClientConnector implements MqttCallback{
 		tls = true;
 	}
 	
+	/**
+	 * This method is called to initiate connection with the broker
+	 * @throws MqttException
+	 * @throws NoSuchAlgorithmException
+	 * @throws KeyManagementException
+	 */
 	public void connect() throws MqttException, NoSuchAlgorithmException, KeyManagementException{
 		//Don't use MemoryPersistence to store data if reliability is required i.e. when clean session is set to false.
 		//when clean session is false, use MqttDefaultFilePersistence
@@ -97,6 +112,9 @@ public class MqttClientConnector implements MqttCallback{
 		}
 	}
 	
+	/**
+	 * This method is called to disconnect from the broker
+	 */
 	public void disconnect() {
 		System.out.println("Disconnecting from " + brokerUrl + " with client ID " + clientID);
 		
@@ -115,8 +133,8 @@ public class MqttClientConnector implements MqttCallback{
      * Once subscribed this method waits for the messages to arrive from the server
      * that match the subscription. It continues listening for messages until the enter key is
      * pressed.
-     * @param topic to subscribe to
-     * @param qos the maximum quality of service to receive messages at for this subscription
+     * @param topic: String. The topic to subscribe to
+     * @param qos: int. The quality of service for this subscription
      */
 	public void subscribe(String topic, int qos) {
 		System.out.println("Subscribing to topic \"" + topic + "\" QoS: " + qos );
@@ -129,6 +147,10 @@ public class MqttClientConnector implements MqttCallback{
 		System.out.println("Subscription successful!");
 	}
 	
+	/**
+	 * This method is called to unsubscribe from a topic
+	 * @param topic
+	 */
 	public void unsubscribe(String topic) {
 		System.out.println("Unsubscribing from topic \"" + topic + "\"");
 		
