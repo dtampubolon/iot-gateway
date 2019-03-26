@@ -57,7 +57,7 @@ public class CoapClientTestApp {
 		payload = dataUtil.sensorDataToJson(sensorData);
 		
 		_coapClient = new CoapClientConnector("127.0.0.1", false);
-		_coapClient.sendPutRequest("json", payload);
+		_coapClient.sendPostRequest("json", payload);
 
 		//System.out.println("Sending discover request..");
 		//_coapClient.discoverResources();
