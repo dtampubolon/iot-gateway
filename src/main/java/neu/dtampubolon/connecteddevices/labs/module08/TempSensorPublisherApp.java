@@ -24,8 +24,10 @@ public class TempSensorPublisherApp {
 	private String authToken;
 	private String certFilePath;
 	
+	/**
+	 * Constructor
+	 */
 	public TempSensorPublisherApp() {
-		// TODO Auto-generated constructor stub
 		authToken = "A1E-Sv1nHOuzR8M950zKv6yWTipuRMjTcN";
 		brokerUrl = "ssl://things.ubidots.com:8883";
 		certFilePath = "C:\\Users\\Doni Tampubolon\\Documents\\Grad School\\CSYE6530\\gitrepo\\iot-gateway\\src\\main\\java\\neu\\dtampubolon\\connecteddevices\\common\\ubidots_cert.pem";
@@ -35,6 +37,10 @@ public class TempSensorPublisherApp {
 		topic = "/v1.6/devices/thermostat";
 	}
 
+	/**
+	 * Main method
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		TempSensorPublisherApp _App = new TempSensorPublisherApp();
 		_App.run();
@@ -55,12 +61,10 @@ public class TempSensorPublisherApp {
 				count++;
 			}
 		};
-		
 		Timer timer = new Timer();
 		long delay =  1000L; //delay before the first reading transmission
 		long period = 1000L * 60L * 5L; //5 minutes interval between data transmission
-		timer.scheduleAtFixedRate(sendReading, delay, period);
-		
+		timer.scheduleAtFixedRate(sendReading, delay, period);	
 	}
 	
 	public void run() {

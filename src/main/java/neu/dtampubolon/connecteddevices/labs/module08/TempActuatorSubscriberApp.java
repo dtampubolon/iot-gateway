@@ -23,14 +23,16 @@ public class TempActuatorSubscriberApp {
 	private String authToken;
 	private String certFilePath;
 	
-	//Constructor
+	/**
+	 * Constructor
+	 */
 	public TempActuatorSubscriberApp() {
 		authToken = "A1E-hMdOquJJDl7WpbktCODvEcI04LZhcs";
 		brokerUrl = "ssl://things.ubidots.com:8883";
 		certFilePath = "C:\\Users\\Doni Tampubolon\\Documents\\Grad School\\CSYE6530\\gitrepo\\iot-gateway\\src\\main\\java\\neu\\dtampubolon\\connecteddevices\\common\\ubidots_cert.pem";
 		sensorData = new SensorData();
 		qos = 0;
-		_mqttClient = new MqttClientConnector(brokerUrl, authToken, certFilePath, authToken);
+		_mqttClient = new MqttClientConnector(brokerUrl, authToken, certFilePath, "");
 		topic = "/v1.6/devices/thermostat/tempactuator/lv";
 		
 		
@@ -41,7 +43,10 @@ public class TempActuatorSubscriberApp {
 		
 	}
 	
-	//Main method
+	/**
+	 * Main method
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		TempActuatorSubscriberApp _App = new TempActuatorSubscriberApp();
 		_App.run();
@@ -54,8 +59,7 @@ public class TempActuatorSubscriberApp {
 		try {
 			_mqttClient.connect();
 		} catch (KeyManagementException | NoSuchAlgorithmException | MqttException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			e.printStackTrace(); //when exception is caught, print stack trace
 		}
 		
 		_mqttClient.subscribe(topic, qos);
@@ -63,8 +67,7 @@ public class TempActuatorSubscriberApp {
 		try {
 			Thread.sleep(300000);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			e.printStackTrace(); //when exception is caught, print stack trace
 		}
 		
 		
