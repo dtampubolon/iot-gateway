@@ -8,6 +8,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.time.LocalDateTime;
 
+import com.labbenchstudios.edu.connecteddevices.common.ConfigConst;
+import com.labbenchstudios.edu.connecteddevices.common.ConfigUtil;
 import com.ubidots.*;
 
 /**
@@ -20,11 +22,13 @@ public class TempSensorCloudPublisherApp {
 	private ApiClient api;
 	private DataSource thermostat;
 	private Variable tempSensor;
+	private static ConfigUtil confUtil = ConfigUtil.getInstance();
 	/**
 	 * Constructor for App
 	 */
 	public TempSensorCloudPublisherApp() {
-		apiToken = "A1E-Sv1nHOuzR8M950zKv6yWTipuRMjTcN";
+		confUtil.loadConfig("C:\\Users\\Doni Tampubolon\\Documents\\Grad School\\CSYE6530\\gitrepo\\iot-gateway\\src\\main\\java\\com\\labbenchstudios\\edu\\connecteddevices\\common\\ConnectedDevicesConfig.props");
+		apiToken = confUtil.getProperty(ConfigConst.UBIDOTS_CLOUD_SECTION, ConfigConst.USER_AUTH_TOKEN_KEY); //Temporary authorization token
 		api = new ApiClient(apiToken);
 		DataSource[] dataSourceArr = api.fromToken(apiToken).getDataSources();
 		thermostat = api.getDataSource("5c9258b7c03f975885d64c1a");

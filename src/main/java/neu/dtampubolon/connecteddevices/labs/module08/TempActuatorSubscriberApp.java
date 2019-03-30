@@ -6,6 +6,9 @@ import java.util.logging.Logger;
 
 import org.eclipse.paho.client.mqttv3.MqttException;
 
+import com.labbenchstudios.edu.connecteddevices.common.ConfigConst;
+import com.labbenchstudios.edu.connecteddevices.common.ConfigUtil;
+
 import neu.dtampubolon.connecteddevices.common.DataUtil;
 import neu.dtampubolon.connecteddevices.common.SensorData;
 import neu.dtampubolon.connecteddevices.labs.module06.MqttClientConnector;
@@ -22,12 +25,13 @@ public class TempActuatorSubscriberApp {
 	private String name;
 	private String authToken;
 	private String certFilePath;
-	
+	private ConfigUtil confUtil = ConfigUtil.getInstance();
 	/**
 	 * Constructor
 	 */
 	public TempActuatorSubscriberApp() {
-		authToken = "A1E-hMdOquJJDl7WpbktCODvEcI04LZhcs";
+		confUtil.loadConfig("C:\\Users\\Doni Tampubolon\\Documents\\Grad School\\CSYE6530\\gitrepo\\iot-gateway\\src\\main\\java\\com\\labbenchstudios\\edu\\connecteddevices\\common\\ConnectedDevicesConfig.props");
+		authToken = confUtil.getProperty(ConfigConst.UBIDOTS_CLOUD_SECTION, ConfigConst.USER_AUTH_TOKEN_KEY); //Temporary authorization token
 		brokerUrl = "ssl://things.ubidots.com:8883";
 		certFilePath = "C:\\Users\\Doni Tampubolon\\Documents\\Grad School\\CSYE6530\\gitrepo\\iot-gateway\\src\\main\\java\\neu\\dtampubolon\\connecteddevices\\common\\ubidots_cert.pem";
 		sensorData = new SensorData();
