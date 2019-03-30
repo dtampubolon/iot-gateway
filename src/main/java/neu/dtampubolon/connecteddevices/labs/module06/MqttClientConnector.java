@@ -138,6 +138,7 @@ public class MqttClientConnector implements MqttCallback{
 		try {
 			client.subscribe(topic, qos);
 		} catch (MqttException e) {
+			System.out.println("Subscription failed!");
 			e.printStackTrace();
 		}
 		System.out.println("Subscription successful!");
@@ -153,6 +154,7 @@ public class MqttClientConnector implements MqttCallback{
 		try {
 			client.unsubscribe(topic);
 		} catch (MqttException e) {
+			System.out.println("Unsubscription failed!");
 			e.printStackTrace();
 		}
 	}
