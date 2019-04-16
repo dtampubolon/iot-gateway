@@ -4,6 +4,7 @@ import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.logging.Logger;
 
 import org.eclipse.paho.client.mqttv3.MqttException;
 
@@ -15,7 +16,7 @@ import neu.dtampubolon.connecteddevices.common.PitchData;
 import neu.dtampubolon.connecteddevices.labs.module06.MqttClientConnector;
 
 public class GatewayDeviceApp implements Observer {
-
+	private static final Logger _Logger = Logger.getLogger(GatewayDeviceApp.class.getName());
 	private static ConfigUtil config = ConfigUtil.getInstance();
 	private boolean enable;
 	
@@ -72,7 +73,7 @@ public class GatewayDeviceApp implements Observer {
 	public void update(Observable o, Object jsonData) {
 		// TODO Auto-generated method stub
 		pd = DataUtil.jsonToPitchData((String) jsonData, true);
-		System.out.println("Gateway device: New Data Received: " + pd);
+		_Logger.info("Gateway device: New Data Received: " + pd);
 	}
 	
 }

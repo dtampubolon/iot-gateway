@@ -31,6 +31,6 @@ public class PitchData {
 	
 	public String toString() {
 		return String.format("\tTime: %1$s "
-				+ "\tCurrent: %2$.5f", timeStamp, curValue);
+				+ "\tCurrent: %2$.0f", timeStamp, curValue);
 	}
 }
