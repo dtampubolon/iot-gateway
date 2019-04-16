@@ -65,6 +65,20 @@ public class DataUtil {
 		}
 		return jsonData;
 	}
+	/**
+	 * This method converts PitchData instance into JSON string
+	 * @param pitchData
+	 * @return JSON string
+	 */
+	public static String pitchDataToJson(PitchData pitchData) {
+		String jsonData = null;
+		
+		if(pitchData != null) {
+			Gson gson = new Gson();
+			jsonData = gson.toJson(pitchData);
+		}
+		return jsonData;
+	}
 	
 	/**
 	 * This method reads a json file and converts it into ActuatorData
@@ -80,7 +94,7 @@ public class DataUtil {
 	}
 	
 	/**
-	 * This method accepts a JSOn string and converts it into SensorData
+	 * This method accepts a JSON string and converts it into SensorData
 	 * @param dataFile: name and location of json string file
 	 * @return ActuatorData object
 	 */
@@ -91,6 +105,21 @@ public class DataUtil {
 			sd = gson.fromJson(jsonData, SensorData.class);
 		}
 		return sd;
+	}
+	
+	/**
+	 * This method converts a JSON string into a PitchData object
+	 * @param jsonData
+	 * @param isJSON
+	 * @return PitchData object
+	 */
+	public static PitchData jsonToPitchData(String jsonData, boolean isJSON) {
+		PitchData pd = null;
+		if(isJSON) {
+			Gson gson = new Gson();
+			pd = gson.fromJson(jsonData, PitchData.class);
+		}
+		return pd;
 	}
 	
 	/**

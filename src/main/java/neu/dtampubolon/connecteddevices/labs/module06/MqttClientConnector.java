@@ -17,6 +17,7 @@ import java.security.KeyManagementException;
 import java.security.KeyStore;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Timestamp;
+import java.util.Observable;
 
 import javax.net.ssl.SSLSocketFactory;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
@@ -25,7 +26,7 @@ import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
  * @author Doni Tampubolon
  *
  */
-public class MqttClientConnector implements MqttCallback{
+public class MqttClientConnector extends Observable implements MqttCallback {
 
 	/**
 	 * This class sets up and manages the connection between a client and a server(broker)
@@ -203,6 +204,10 @@ public class MqttClientConnector implements MqttCallback{
                 "  \nQoS:\t" + message.getQos());
 		
 		lastRecMsg = new String(message.getPayload());
+		
+		//Notify main app if there are new messages
+		setChanged();
+		notifyObservers(lastRecMsg);
 	}
 
 	/**
