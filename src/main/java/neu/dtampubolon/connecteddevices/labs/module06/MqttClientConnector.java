@@ -103,6 +103,7 @@ public class MqttClientConnector implements MqttCallback{
 			client = new MqttClient(brokerUrl, clientID, new MemoryPersistence());
 			client.setCallback(this);
 		}
+		conOpt.setKeepAliveInterval(60);
 		System.out.println("Connecting to " + brokerUrl + " with client ID " + clientID);
 		client.connect(conOpt);
 		System.out.println("Connected to " + brokerUrl + "\n");
