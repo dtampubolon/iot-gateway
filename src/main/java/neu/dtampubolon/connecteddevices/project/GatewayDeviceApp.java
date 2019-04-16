@@ -45,6 +45,10 @@ public class GatewayDeviceApp implements Observer {
 		// TODO Auto-generated method stub
 		GatewayDeviceApp app = new GatewayDeviceApp();
 		config.loadConfig();
+		
+		//Adding this app as an observer to mqttConn callbacks
+		mqttConn.addObserver(app);
+		
 		smtpConn = new SmtpConnector("dtampubolon.iot", config.getProperty(ConfigConst.SMTP_CLOUD_SECTION, ConfigConst.USER_AUTH_TOKEN_KEY));
 		//smtpConn.sendMail(mailRecipient, "Test Subject", "This is a test email");
 		app.run();
