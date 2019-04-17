@@ -30,27 +30,44 @@ public class GatewayDeviceApp implements Observer {
 	private static MqttClientConnector mqttConn;
 	private String brokerUrl = "tcp://iot.eclipse.org:1883";
 	private String clientName = "GatewayDevice-CSYE6530";
-	private String mqttTopic = "PitchData-CSYE6530";
+	private String subscribeTopic = "PitchData-CSYE6530";
+	private String publishTopic = "LED-CSYE6530";
+	private String authToken;
 	
+	//Ubidots
+	private String ubidotsUrl = "ssl://things.ubidots.com:8883";
+	private String certFilePath = "C:\\Users\\Doni Tampubolon\\Documents\\Grad School\\CSYE6530\\gitrepo\\iot-gateway\\src\\main\\java\\neu\\dtampubolon\\connecteddevices\\common\\ubidots_cert.pem";
+	private static MqttClientConnector ubidotsMqtt;
+	private static ApiConnector ubidotsApi;
+	private String valveTopic = "/v1.6/devices/finalproject/valve/lv";
 	//Actuator
-	private boolean ledON = false;
+	private int ledON = 0;
 	
 	//Pitch data
-	PitchData pd = new PitchData();
+	private PitchData pd = new PitchData();
+	private double minPitch = 310;
 	
 	public GatewayDeviceApp() {
+		//Load configuration file
+		config.loadConfig();
+		
 		mqttConn = new MqttClientConnector(brokerUrl, clientName);
+		smtpConn = new SmtpConnector("dtampubolon.iot", config.getProperty(ConfigConst.SMTP_CLOUD_SECTION, ConfigConst.USER_AUTH_TOKEN_KEY));
+
+		authToken = config.getProperty(ConfigConst.UBIDOTS_CLOUD_SECTION, ConfigConst.USER_AUTH_TOKEN_KEY); //Temporary authorization token
+		ubidotsMqtt = new MqttClientConnector(ubidotsUrl, authToken, certFilePath, "");
+		
+		ubidotsApi = new ApiConnector();
 	}
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		GatewayDeviceApp app = new GatewayDeviceApp();
-		config.loadConfig();
 		
 		//Adding this app as an observer to mqttConn callbacks
 		mqttConn.addObserver(app);
+		ubidotsMqtt.addObserver(app);
 		
-		smtpConn = new SmtpConnector("dtampubolon.iot", config.getProperty(ConfigConst.SMTP_CLOUD_SECTION, ConfigConst.USER_AUTH_TOKEN_KEY));
 		//smtpConn.sendMail(mailRecipient, "Test Subject", "This is a test email");
 		app.run();
 	}
@@ -58,11 +75,17 @@ public class GatewayDeviceApp implements Observer {
 	public void run() {
 		try {
 			mqttConn.connect();
+			ubidotsMqtt.connect();
 		} catch (KeyManagementException | NoSuchAlgorithmException | MqttException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		mqttConn.subscribe(mqttTopic, 2);
+		
+		mqttConn.subscribe(subscribeTopic, 2);
+		ubidotsMqtt.subscribe(valveTopic, 2);
+		
+//		ubidotsApi.sendPitchValue((double)360);
+
 		int count=0;
 		while(enable) {
 			count=0*2;
@@ -70,10 +93,28 @@ public class GatewayDeviceApp implements Observer {
 	}
 
 	@Override
-	public void update(Observable o, Object jsonData) {
+	public void update(Observable o, Object data) {
 		// TODO Auto-generated method stub
-		pd = DataUtil.jsonToPitchData((String) jsonData, true);
-		_Logger.info("Gateway device: New Data Received: " + pd);
+		if(o.equals(mqttConn)) {
+			pd = DataUtil.jsonToPitchData((String) data, true);
+			_Logger.info("Gateway device: New Data Received: " + pd);
+			ubidotsApi.sendPitchValue((double) pd.getCurValue());
+		}
+		
+		else if(o.equals(ubidotsMqtt)) {
+			int valveData = Integer.parseInt((String) data);
+			if(valveData != ledON) {
+				ledON = valveData;
+				mqttConn.publish(publishTopic, 0, String.valueOf(ledON));
+				
+				if(ledON==1) {
+					System.out.println("Turning ON Valve(LED)...\n");
+				}
+				else {
+					System.out.println("Turning OFF Valve(LED)...\n");
+				}
+			}
+		}
 	}
 	
 }

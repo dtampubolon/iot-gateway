@@ -31,7 +31,7 @@ package com.labbenchstudios.edu.connecteddevices.common;
 public class ConfigConst
 {
 	public static final String SECTION_SEPARATOR        = ".";
-	public static final String DATA_PATH                = "/home/pi/Applications/data/";
+	public static final String DATA_PATH                = "C:\\Users\\Doni Tampubolon\\Documents\\Grad School\\CSYE6530\\gitrepo\\iot-gateway\\src\\main\\java\\com\\labbenchstudios\\edu\\connecteddevices\\common\\";//"/home/pi/Applications/data/";
 	public static final String DEFAULT_CONFIG_FILE_NAME = DATA_PATH + "ConnectedDevicesConfig.props";
 
 	public static final String DEFAULT_COAP_PROTOCOL  = "coap";

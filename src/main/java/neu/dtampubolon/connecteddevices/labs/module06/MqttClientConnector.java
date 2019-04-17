@@ -201,7 +201,7 @@ public class MqttClientConnector extends Observable implements MqttCallback {
 		System.out.println("Time:\t" +time +
                 "  \nTopic:\t" + topic +
                 "  \nMessage:\t" + new String(message.getPayload()) +
-                "  \nQoS:\t" + message.getQos());
+                "  \nQoS:\t" + message.getQos() + "\n");
 		
 		lastRecMsg = new String(message.getPayload());
 		
