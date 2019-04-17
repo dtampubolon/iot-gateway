@@ -205,9 +205,10 @@ public class MqttClientConnector extends Observable implements MqttCallback {
 		
 		lastRecMsg = new String(message.getPayload());
 		
+		String[] data = new String[] {topic, lastRecMsg};
 		//Notify main app if there are new messages
 		setChanged();
-		notifyObservers(lastRecMsg);
+		notifyObservers(data);
 	}
 
 	/**

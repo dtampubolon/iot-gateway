@@ -13,6 +13,7 @@ import com.labbenchstudios.edu.connecteddevices.common.ConfigUtil;
 
 import neu.dtampubolon.connecteddevices.common.DataUtil;
 import neu.dtampubolon.connecteddevices.common.PitchData;
+import neu.dtampubolon.connecteddevices.common.SensorData;
 import neu.dtampubolon.connecteddevices.labs.module06.MqttClientConnector;
 
 public class GatewayDeviceApp implements Observer {
@@ -31,6 +32,7 @@ public class GatewayDeviceApp implements Observer {
 	private String brokerUrl = "tcp://iot.eclipse.org:1883";
 	private String clientName = "GatewayDevice-CSYE6530";
 	private String subscribeTopic = "PitchData-CSYE6530";
+	private String subscribeTopic2 = "Temperature-CSYE6530";
 	private String publishTopic = "LED-CSYE6530";
 	private String authToken;
 	
@@ -40,12 +42,16 @@ public class GatewayDeviceApp implements Observer {
 	private static MqttClientConnector ubidotsMqtt;
 	private static ApiConnector ubidotsApi;
 	private String valveTopic = "/v1.6/devices/finalproject/valve/lv";
+	
 	//Actuator
 	private int ledON = 0;
 	
 	//Pitch data
 	private PitchData pd = new PitchData();
 	private double minPitch = 310;
+	
+	//Temperature data
+	private SensorData sd;
 	
 	public GatewayDeviceApp() {
 		//Load configuration file
@@ -82,6 +88,7 @@ public class GatewayDeviceApp implements Observer {
 		}
 		
 		mqttConn.subscribe(subscribeTopic, 2);
+		mqttConn.subscribe(subscribeTopic2, 2);
 		ubidotsMqtt.subscribe(valveTopic, 2);
 		
 //		ubidotsApi.sendPitchValue((double)360);
@@ -96,13 +103,22 @@ public class GatewayDeviceApp implements Observer {
 	public void update(Observable o, Object data) {
 		// TODO Auto-generated method stub
 		if(o.equals(mqttConn)) {
-			pd = DataUtil.jsonToPitchData((String) data, true);
-			_Logger.info("Gateway device: New Data Received: " + pd);
-			ubidotsApi.sendPitchValue((double) pd.getCurValue());
+			if(((String[]) data)[0].equals(subscribeTopic)) {
+				pd = DataUtil.jsonToPitchData(((String[]) data)[1], true);
+				_Logger.info("Gateway device:\nNew pitch reading received:" + pd);
+				ubidotsApi.sendPitchValue((double) pd.getCurValue());
+			}
+			
+			else if(((String[]) data)[0].equals(subscribeTopic2)) {
+				sd = DataUtil.jsonToSensorData(((String[]) data)[1], true);
+				_Logger.info("Gateway device:\nNew Temperature reading received" + sd);
+				ubidotsApi.sendTempValue((double) sd.getCurValue());
+			}
+
 		}
 		
 		else if(o.equals(ubidotsMqtt)) {
-			int valveData = Integer.parseInt((String) data);
+			int valveData = Integer.parseInt(((String[]) data)[1]);
 			if(valveData != ledON) {
 				ledON = valveData;
 				mqttConn.publish(publishTopic, 0, String.valueOf(ledON));
