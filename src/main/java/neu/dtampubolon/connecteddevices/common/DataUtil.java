@@ -98,7 +98,7 @@ public class DataUtil {
 	 * @param dataFile: name and location of json string file
 	 * @return ActuatorData object
 	 */
-	public SensorData jsonToSensorData(String jsonData, boolean isJSON) {
+	public static SensorData jsonToSensorData(String jsonData, boolean isJSON) {
 		SensorData sd = null;
 		if(isJSON) {
 			Gson gson = new Gson();
