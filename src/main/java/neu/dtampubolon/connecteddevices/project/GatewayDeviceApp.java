@@ -129,12 +129,12 @@ public class GatewayDeviceApp implements Observer {
 			int valveData = Integer.parseInt(((String[]) data)[1]);
 			if(valveData != ledON) {
 				ledON = valveData;
-				mqttConn.publish(publishTopic, 0, String.valueOf(ledON));
+				mqttConn.publish(publishTopic, 2, String.valueOf(ledON));
 				
 				if(ledON==1) {
 					System.out.println("Turning ON Valve(LED)...\n");
 				}
-				else {
+				else if(ledON==0) {
 					oneShot = true;
 					System.out.println("Turning OFF Valve(LED)...\n");
 				}
