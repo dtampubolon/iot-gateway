@@ -111,7 +111,7 @@ public class GatewayDeviceApp implements Observer {
 				_Logger.info("Gateway device:\nNew pitch reading received:" + pd);
 				ubidotsApi.sendPitchValue((double) pd.getCurValue());
 				
-				if(pd.getCurValue() <= minPitch && oneShot) {
+				if((pd.getCurValue() <= minPitch) && oneShot) {
 					smtpConn.sendMail("tampubolon.d@husky.neu.edu", "ALERT: Water Level", "Water level has fallen below the minimum!");
 					oneShot = false;
 				}
