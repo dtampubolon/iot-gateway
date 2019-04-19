@@ -25,6 +25,10 @@ public class SmtpConnector {
         props.put("mail.smtp.auth", "true");
 	}
 	
+	public void sendMail(String to, String subject, String body) {
+		sendMail(new String[] {to}, subject, body);
+	}
+	
 	public void sendMail(String[] to, String subject, String body) {        
 		Session session = Session.getDefaultInstance(props);
 		MimeMessage message = new MimeMessage(session);
@@ -35,18 +39,21 @@ public class SmtpConnector {
 			
 			for(int i=0; i < to.length; i++) {
 				toAddress[i] = new InternetAddress(to[i]);
+				System.out.println("Sending e-mail to " + to[i]);
 			}
 			
             for( int i = 0; i < toAddress.length; i++) {
                 message.addRecipient(Message.RecipientType.TO, toAddress[i]);
+                
             }
             
 			message.setSubject(subject);
 			message.setText(body);
-			Transport transport = session.getTransport("smtp");
+			Transport transport = session.getTransport("smtp");			
 			transport.connect(host, username, password);
 			transport.sendMessage(message, message.getAllRecipients());
 			transport.close();
+			System.out.println("Email sent!");
 			
 		} catch (MessagingException e) {
 			e.printStackTrace();

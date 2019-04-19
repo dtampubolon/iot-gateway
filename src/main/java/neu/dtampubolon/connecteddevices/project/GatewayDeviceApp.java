@@ -20,6 +20,7 @@ public class GatewayDeviceApp implements Observer {
 	private static final Logger _Logger = Logger.getLogger(GatewayDeviceApp.class.getName());
 	private static ConfigUtil config = ConfigUtil.getInstance();
 	private boolean enable;
+	private boolean oneShot = true;
 	
 	//SMTP variables
 	private static String[] mailRecipient = new String[] {"tampubolon.d@husky.neu.edu"};
@@ -49,6 +50,7 @@ public class GatewayDeviceApp implements Observer {
 	//Pitch data
 	private PitchData pd = new PitchData();
 	private double minPitch = 310;
+	private double normPitch = 345;
 	
 	//Temperature data
 	private SensorData sd;
@@ -64,6 +66,7 @@ public class GatewayDeviceApp implements Observer {
 		ubidotsMqtt = new MqttClientConnector(ubidotsUrl, authToken, certFilePath, "");
 		
 		ubidotsApi = new ApiConnector();
+		
 	}
 
 	public static void main(String[] args) {
@@ -95,7 +98,7 @@ public class GatewayDeviceApp implements Observer {
 
 		int count=0;
 		while(enable) {
-			count=0*2;
+			enable = true;
 		}
 	}
 
@@ -107,6 +110,11 @@ public class GatewayDeviceApp implements Observer {
 				pd = DataUtil.jsonToPitchData(((String[]) data)[1], true);
 				_Logger.info("Gateway device:\nNew pitch reading received:" + pd);
 				ubidotsApi.sendPitchValue((double) pd.getCurValue());
+				
+				if(pd.getCurValue() <= minPitch && oneShot) {
+					smtpConn.sendMail("tampubolon.d@husky.neu.edu", "ALERT: Water Level", "Water level has fallen below the minimum!");
+					oneShot = false;
+				}
 			}
 			
 			else if(((String[]) data)[0].equals(subscribeTopic2)) {
@@ -127,6 +135,7 @@ public class GatewayDeviceApp implements Observer {
 					System.out.println("Turning ON Valve(LED)...\n");
 				}
 				else {
+					oneShot = true;
 					System.out.println("Turning OFF Valve(LED)...\n");
 				}
 			}
