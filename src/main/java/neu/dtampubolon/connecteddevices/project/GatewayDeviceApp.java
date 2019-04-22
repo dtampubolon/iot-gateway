@@ -16,6 +16,12 @@ import neu.dtampubolon.connecteddevices.common.PitchData;
 import neu.dtampubolon.connecteddevices.common.SensorData;
 import neu.dtampubolon.connecteddevices.labs.module06.MqttClientConnector;
 
+/**
+ * This app runs on the gateway of the IoT system.
+ * This app communicates with the constrained device through MQTT and communicates with Ubidots through HTTPS and MQTT
+ * @author Doni Tampubolon
+ *
+ */
 public class GatewayDeviceApp implements Observer {
 	private static final Logger _Logger = Logger.getLogger(GatewayDeviceApp.class.getName());
 	private static ConfigUtil config = ConfigUtil.getInstance();
@@ -70,7 +76,7 @@ public class GatewayDeviceApp implements Observer {
 	}
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		//Main method
 		GatewayDeviceApp app = new GatewayDeviceApp();
 		
 		//Adding this app as an observer to mqttConn callbacks
@@ -81,6 +87,9 @@ public class GatewayDeviceApp implements Observer {
 		app.run();
 	}
 	
+	/**
+	 * This method initiates MQTT connections with MQTT brokers and subscribes to topics
+	 */
 	public void run() {
 		try {
 			mqttConn.connect();
@@ -102,9 +111,12 @@ public class GatewayDeviceApp implements Observer {
 		}
 	}
 
+	/**
+	 * This method is called when an MQTT message is received by the MQTT connector
+	 */
 	@Override
 	public void update(Observable o, Object data) {
-		// TODO Auto-generated method stub
+		//Check if data is coming from Eclipse MQTT broker
 		if(o.equals(mqttConn)) {
 			if(((String[]) data)[0].equals(subscribeTopic)) {
 				pd = DataUtil.jsonToPitchData(((String[]) data)[1], true);
@@ -124,7 +136,7 @@ public class GatewayDeviceApp implements Observer {
 			}
 
 		}
-		
+		//Check if data is coming from Ubidots MQTT broker
 		else if(o.equals(ubidotsMqtt)) {
 			int valveData = Integer.parseInt(((String[]) data)[1]);
 			if(valveData != ledON) {

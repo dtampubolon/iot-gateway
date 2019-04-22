@@ -3,7 +3,11 @@ package neu.dtampubolon.connecteddevices.project;
 import java.util.*;
 import javax.mail.*;
 import javax.mail.internet.*;
-
+/**
+ * This class establishes a connection with Google's SMTP mail server
+ * @author Doni Tampubolon
+ *
+ */
 public class SmtpConnector {
 
 	private String username;
@@ -12,6 +16,11 @@ public class SmtpConnector {
 	private static Properties props;
 	private static String host = "smtp.gmail.com";
 	
+	/**
+	 * Constructor
+	 * @param username
+	 * @param password
+	 */
 	public SmtpConnector(String username, String password) {
 		this.username = username;
 		this.password = password;
@@ -25,10 +34,22 @@ public class SmtpConnector {
         props.put("mail.smtp.auth", "true");
 	}
 	
+	/**
+	 * Alternate method signature for sendMail
+	 * @param to
+	 * @param subject
+	 * @param body
+	 */
 	public void sendMail(String to, String subject, String body) {
 		sendMail(new String[] {to}, subject, body);
 	}
 	
+	/**
+	 * This method creates a new session and sends mail to recipients 
+	 * @param to
+	 * @param subject
+	 * @param body
+	 */
 	public void sendMail(String[] to, String subject, String body) {        
 		Session session = Session.getDefaultInstance(props);
 		MimeMessage message = new MimeMessage(session);

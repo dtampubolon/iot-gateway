@@ -4,8 +4,13 @@ import com.labbenchstudios.edu.connecteddevices.common.ConfigConst;
 import com.labbenchstudios.edu.connecteddevices.common.ConfigUtil;
 import com.ubidots.*;
 
+/**
+ * This class enables connection with Ubidots API through HTTPS
+ * @author Doni Tampubolon
+ *
+ */
 public class ApiConnector {
-
+	
 	private String apiToken;
 	private ApiClient api;
 	private Variable temperature;
@@ -33,14 +38,17 @@ public class ApiConnector {
 		test.sendPitchValue(360.0);
 	}*/
 	
+	//This method updates the pitch variable on Ubidots
 	public void sendPitchValue(double value) {
 		 pitch.saveValue(value);
 	}
 	
+	//This method updates the temperature variable on Ubidots
 	public void sendTempValue(double value) {
 		temperature.saveValue(value);
 	}
 	
+	//This method updates the valve variable on Ubidots
 	public void setValve(int value) {
 		valve.saveValue(value);
 	}

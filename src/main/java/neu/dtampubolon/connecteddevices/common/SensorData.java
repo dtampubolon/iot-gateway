@@ -58,6 +58,9 @@ public class SensorData {
 		}
 		
 	}
+	/**
+	 * This method is the string formatter for SensorData objects when they are printed out to the console
+	 */
 	public String toString() {
 		return String.format("\tTime: %1$s "
 				+ "\tCurrent: %2$.5f"
@@ -66,26 +69,51 @@ public class SensorData {
 				+ "\tMin: %5$.5f"
 				+ "\tMax: %5$.5f", timeStamp, curValue, avgValue, sampleCount, minValue, maxValue);
 	}
+	
+	/**
+	 * This method returns the name of SensorData instance
+	 * @return
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * This method sets the name of SensorData instance
+	 * @param name
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
+	/**
+	 * This method returns the latest temperature value
+	 * @return
+	 */
 	public double getCurValue() {
 		return curValue;
 	}
 
+	/**
+	 * This method returns the average temperature value
+	 * @return
+	 */
 	public double getAvgValue() {
 		return avgValue;
 	}
 
+	/**
+	 * This method returns the minimum temperature value
+	 * @return
+	 */
 	public double getMinValue() {
 		return minValue;
 	}
 
+	/**
+	 * This method returns the maximum temperature value
+	 * @return
+	 */
 	public double getMaxValue() {
 		return maxValue;
 	}
